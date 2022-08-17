@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -17,6 +18,7 @@ var traceCmd = &cobra.Command{
 		if len(args) > 0 {
 			for _, ip := range args {
 				fmt.Println(ip)
+				showData()
 			}
 		} else {
 			fmt.Println("Please provide IP to trace")
@@ -43,6 +45,14 @@ func showData() {
 	url := "http://ipinfo.io/1.1.1.1/geo"
 	responseByte := getData(url)
 
+	data := Ip{}
+	err := json.Unmarshal(responseByte, &data)
+	if err != nil {
+		fmt.Println("Unable to unmarshal the response")
+	}
+
+	fmt.Println("DATA FOUND:")
+	fmt.Println(data)
 }
 
 func getData(url string) []byte {
