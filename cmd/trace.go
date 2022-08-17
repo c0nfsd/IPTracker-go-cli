@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -49,9 +50,9 @@ func showData(ip string) {
 	if err != nil {
 		fmt.Println("Unable to unmarshal the response")
 	}
-
-	fmt.Println("DATA FOUND:")
-	fmt.Printf("IP:%s\nCITY:%s\nREGION:%s\nCOUNTRY:%s\nLOCATION:%s\nTIMEZONE:%s\nPOSTAL:%s\n", data.IP, data.City, data.Region, data.Country, data.Loc, data.TimeZone, data.Postal)
+	c := color.New(color.FgRed).Add(color.Underline).Add(color.Bold)
+	c.Println("DATA FOUND:\n")
+	fmt.Printf("IP: %s\nCITY: %s\nREGION: %s\nCOUNTRY: %s\nLOCATION: %s\nTIMEZONE: %s\nPOSTAL: %s\n", data.IP, data.City, data.Region, data.Country, data.Loc, data.TimeZone, data.Postal)
 }
 
 func getData(url string) []byte {
